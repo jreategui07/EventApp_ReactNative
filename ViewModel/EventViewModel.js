@@ -1,5 +1,5 @@
 import TicketMasterService from '../Model/Data/TicketMasterService';
-import FirebaseService from '../Model/Data/FirebaseService';
+import FirebaseDatabase from '../Model/Data/FirebaseDatabase';
 
 const EventViewModel = {
   fetchEventList: async (start = 0, limit = 50) => {
@@ -26,7 +26,7 @@ const EventViewModel = {
 
   addToFavorites: async (event) => {
     try {
-      const result = await FirebaseService.addToFavorites(event);
+      const result = await FirebaseDatabase.addToFavorites(event);
       console.log('Event added to favorites:', event);
       return result;
     } catch (error) {
@@ -37,7 +37,7 @@ const EventViewModel = {
 
   removeFromFavorites: async (eventId) => {
     try {
-      await FirebaseService.removeFromFavorites(eventId);
+      await FirebaseDatabase.removeFromFavorites(eventId);
       console.log('Event removed from favorites:', eventId);
     } catch (error) {
       console.error('Error removing event from favorites:', error);
@@ -47,7 +47,7 @@ const EventViewModel = {
 
   fetchFavorites: async () => {
     try {
-      const favorites = await FirebaseService.getFavorites();
+      const favorites = await FirebaseDatabase.getFavorites();
       console.log('Fetched Favorites:', favorites);
       return favorites;
     } catch (error) {
@@ -58,7 +58,7 @@ const EventViewModel = {
 
   removeAllFavorites: async () => {
     try {
-      await FirebaseService.removeAllFavorites();
+      await FirebaseDatabase.removeAllFavorites();
       console.log('All favorites removed successfully');
     } catch (error) {
       console.error('Error removing all favorites:', error);

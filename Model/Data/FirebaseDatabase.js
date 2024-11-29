@@ -1,7 +1,7 @@
 import { collection, addDoc, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../Config/FirebaseConfig';
 
-const FirebaseService = {
+const FirebaseDatabase = {
   addToFavorites: async (event) => {
     try {
       const collectionRef = collection(db, 'favorites');
@@ -66,4 +66,4 @@ const FirebaseService = {
   },
 };
 
-export default FirebaseService;
+export default FirebaseDatabase;
