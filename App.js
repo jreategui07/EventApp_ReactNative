@@ -35,14 +35,14 @@ export default function App() {
   ];
 
   const headerOptions = (navigation) => ({
-    headerStyle: { backgroundColor: '#3b5998' },
-    headerTintColor: 'white',
+    headerStyle: { backgroundColor: '#007BFF' },
+    headerTintColor: '#FFFFFF',
     headerTitleAlign: 'center',
     headerTitleStyle: { fontWeight: 'bold', fontSize: 20 },
     headerRight: () => (
       <Button
         title="Logout"
-        color="#FF6347"
+        color="#FFFFFF"
         onPress={async () => {
           try {
             await signOut();
@@ -72,12 +72,13 @@ export default function App() {
           {() => (
             <GenericTabNavigator
               screens={tabScreens}
-              activeColor="tomato"
-              inactiveColor="gray"
+              activeColor="#FFFFFF"
+              inactiveColor="#D3D3D3"
               tabBarStyle={{
-                backgroundColor: '#282c34',
+                backgroundColor: '#007BFF',
                 borderTopLeftRadius: 15,
                 borderTopRightRadius: 15,
+                paddingBottom: 5,
               }}
             />
           )}

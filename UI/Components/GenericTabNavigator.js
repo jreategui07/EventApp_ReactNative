@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
 
-const GenericTabNavigator = ({ screens, activeColor = 'tomato', inactiveColor = 'gray', tabBarStyle = {} }) => (
+const GenericTabNavigator = ({ screens, activeColor = '#FFFFFF', inactiveColor = '#D3D3D3', tabBarStyle = {} }) => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
       tabBarActiveTintColor: activeColor,
