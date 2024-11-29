@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import useAuthViewModel from '../ViewModel/AuthViewModel';
 
@@ -42,10 +42,25 @@ const SignUpScreen = () => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Sign Up" onPress={handleSignUp} disabled={loading} />
 
-      {loading && <Text>Loading...</Text>}
+      {/* Sign Up button */}
+      <TouchableOpacity
+        style={[styles.button, loading && styles.buttonDisabled]}
+        onPress={handleSignUp}
+        disabled={loading}
+      >
+        <Text style={styles.buttonText}>{loading ? 'Loading...' : 'Sign Up'}</Text>
+      </TouchableOpacity>
+
       {error && <Text style={styles.error}>{error}</Text>}
+
+      {/* Back to Sign In button */}
+      <View style={styles.signinContainer}>
+        <Text style={styles.signinText}>Already have an account?</Text>
+        <TouchableOpacity style={styles.signinButton} onPress={() => navigation.navigate('SignIn')}>
+          <Text style={styles.signinButtonText}>Sign In</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -54,23 +69,88 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
+    backgroundColor: '#f8f9fa',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 30,
+    color: '#007BFF',
+    textAlign: 'center',
   },
   input: {
+    width: '100%',
     borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
+    borderColor: '#007BFF',
+    padding: 12,
+    marginBottom: 15,
+    borderRadius: 8,
+    backgroundColor: '#ffffff',
+    fontSize: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  button: {
+    width: '100%',
+    backgroundColor: '#007BFF',
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  buttonDisabled: {
+    backgroundColor: '#a1c6e7',
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
   error: {
-    color: 'red',
+    color: '#ff4d4f',
+    fontSize: 14,
     marginTop: 10,
+    textAlign: 'center',
+  },
+  signinContainer: {
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  signinText: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: '#6c757d',
+    fontWeight: '500',
+  },
+  signinButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#ffffff',
+    borderColor: '#007BFF',
+    borderWidth: 1,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  signinButtonText: {
+    color: '#007BFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
 });
 
