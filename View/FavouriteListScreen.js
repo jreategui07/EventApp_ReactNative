@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useLayoutEffect } from 'react';
-import { View, FlatList, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { View, FlatList, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Image } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import EventViewModel from '../ViewModel/EventViewModel';
 
@@ -56,18 +56,31 @@ const FavouriteListScreen = ({ navigation }) => {
     });
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.itemContainer}
-      onPress={() => navigateToEventDetailsScreen(item)}
-    >
-      <View style={{ flex: 1 }}>
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemDate}>{item.dates?.start?.localDate}</Text>
-        <Text style={styles.itemVenue}>{item._embedded?.venues[0]?.name}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+  const renderItem = ({ item }) => {
+    const eventImage = item.images?.[0]?.url || null; // Getting the first image from the event to display
+
+    return (
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={() => navigateToEventDetailsScreen(item)}
+      >
+        {
+          eventImage && (
+            <Image
+              source={{ uri: eventImage }}
+              style={styles.itemImage}
+              resizeMode="cover"
+            />
+          )
+        }
+        <View style={styles.itemDetails}>
+          <Text style={styles.itemName}>{item.name}</Text>
+          <Text style={styles.itemDate}>{item.dates?.start?.localDate}</Text>
+          <Text style={styles.itemVenue}>{item._embedded?.venues[0]?.name}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   if (loading) {
     return (
@@ -124,7 +137,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     backgroundColor: '#ffffff',
-    padding: 20,
+    padding: 10,
     marginVertical: 8,
     marginHorizontal: 15,
     borderRadius: 10,
@@ -135,6 +148,15 @@ const styles = StyleSheet.create({
     elevation: 5,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  itemImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  itemDetails: {
+    flex: 1,
   },
   itemName: {
     fontSize: 18,

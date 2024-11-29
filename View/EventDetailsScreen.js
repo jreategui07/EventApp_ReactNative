@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 import EventViewModel from '../ViewModel/EventViewModel';
 
 const EventDetailsScreen = ({ route }) => {
@@ -60,6 +60,16 @@ const EventDetailsScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
+      {
+        eventDetails.images?.[0]?.url && (
+          <Image
+            source={{ uri: eventDetails.images[0].url }}
+            style={styles.eventImage}
+            resizeMode="cover"
+          />
+        )
+      }
+
       <Text style={styles.title}>{eventDetails.name}</Text>
       <Text style={styles.subtitle}>{eventDetails.dates?.start?.localDate}</Text>
 
@@ -100,6 +110,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#f8f9fa',
+  },
+  eventImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 20,
   },
   loaderContainer: {
     flex: 1,

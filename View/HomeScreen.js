@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, FlatList, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import EventViewModel from '../ViewModel/EventViewModel';
 
 const HomeScreen = ({ navigation }) => {
@@ -30,14 +30,27 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const renderItem = ({ item }) => {
+    const eventImage = item.images?.[0]?.url || null; // Getting the first image from the event to display
+
     return (
       <TouchableOpacity
         style={styles.itemContainer}
         onPress={() => navigateToEventDetails(item)}
       >
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemDate}>{item.dates?.start?.localDate}</Text>
-        <Text style={styles.itemLocation}>{item._embedded?.venues[0]?.name}</Text>
+        {
+          eventImage && (
+            <Image
+              source={{ uri: eventImage }}
+              style={styles.itemImage}
+              resizeMode="cover"
+            />
+          )
+        }
+        <View style={styles.itemDetails}>
+          <Text style={styles.itemName}>{item.name}</Text>
+          <Text style={styles.itemDate}>{item.dates?.start?.localDate}</Text>
+          <Text style={styles.itemLocation}>{item._embedded?.venues[0]?.name}</Text>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -73,24 +86,36 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     backgroundColor: '#ffffff',
-    padding: 20,
+    padding: 10,
     marginVertical: 8,
+    marginHorizontal: 15,
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   itemName: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#1c4e80',
-    marginBottom: 5,
+  },
+  itemImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  itemDetails: {
+    flex: 1,
   },
   itemDate: {
     fontSize: 14,
-    color: '#6b7280',
+    color: '#6c757d',
+    fontStyle: 'italic',
   },
   itemLocation: {
     fontSize: 16,
