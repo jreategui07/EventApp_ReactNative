@@ -42,7 +42,7 @@ export default function App() {
     headerRight: () => (
       <Button
         title="Logout"
-        color="#FFFFFF"
+        // color="#FFFFFF"
         onPress={async () => {
           try {
             await signOut();
